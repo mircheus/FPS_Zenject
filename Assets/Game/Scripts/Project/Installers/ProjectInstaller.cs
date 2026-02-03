@@ -7,6 +7,8 @@ public class ProjectInstaller : MonoInstaller
     
     public override void InstallBindings()
     {
+        Debug.Log("ProjectInstaller INSTALL");
+        
         SignalBusInstaller.Install(Container);
 
         Container.DeclareSignal<DamageSignal>();
