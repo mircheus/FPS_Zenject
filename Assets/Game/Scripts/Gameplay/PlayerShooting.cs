@@ -9,14 +9,15 @@ namespace Game.Scripts.Gameplay
     {
         private IInputService _inputService;
         private Bullet.Factory _bulletFactory;
+        private IWeaponStrategy _weapon;
         private float _fireRate = 0.2f;
         private float _cooldown;
 
         [Inject]
-        public void Construct(IInputService inputService, Bullet.Factory bulletFactory)
+        public void Construct(IInputService inputService, IWeaponStrategy weapon)
         {
             _inputService = inputService;
-            _bulletFactory = bulletFactory;
+            _weapon = weapon;
         }
 
         private void Update()
@@ -25,16 +26,14 @@ namespace Game.Scripts.Gameplay
 
             if (_inputService.IsShooting && _cooldown <= 0)
             {
-                Fire();
+                _weapon.Fire(transform.position, transform.rotation);
                 _cooldown = _fireRate;
             }
         }
 
-        private void Fire()
+        public void SetWeapon(IWeaponStrategy newWeapon)
         {
-            Bullet bullet = _bulletFactory.Create();
-            bullet.transform.position = transform.position + Vector3.up * 0.5f;
-            bullet.transform.rotation = transform.rotation;
+            _weapon = newWeapon;
         }
     }
 }

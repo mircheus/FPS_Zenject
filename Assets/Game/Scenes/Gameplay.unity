@@ -848,6 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7095908480107921108, guid: 0682b2de4c42ba2409ba77af36bd5bd5, type: 3}
   enemyPrefab: {fileID: 9134394058134287266, guid: df4af2e6d9e40f74693a1fd540f85818, type: 3}
+  pickupPrefab: {fileID: 4142406309896753017, guid: 22691a1c025e447aa909de6f4e11af4b, type: 3}
 --- !u!4 &1579523413
 Transform:
   m_ObjectHideFlags: 0

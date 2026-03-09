@@ -10,6 +10,7 @@ namespace Game.Scripts.Project.Installers
     {
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private GameObject enemyPrefab;
+        [SerializeField] private GameObject pickupPrefab;
         
         public override void InstallBindings()
         {
@@ -36,11 +37,22 @@ namespace Game.Scripts.Project.Installers
                 .To<KeyboardInputService>()
                 .AsSingle();
 
+            Container.Bind<NormalWeapon>().AsSingle();
+            Container.Bind<ShotgunWeapon>().AsSingle();
+            Container.Bind<WeaponRegistry>().AsSingle();
+
+            Container.Bind<IWeaponStrategy>()
+                .FromResolveGetter<WeaponRegistry>(registry => registry.Get(WeaponType.Normal))
+                .AsSingle();
+
             Container.BindFactory<Bullet, Bullet.Factory>()
                 .FromComponentInNewPrefab(bulletPrefab);
 
             Container.BindFactory<Enemy, Enemy.Factory>()
                 .FromComponentInNewPrefab(enemyPrefab);
+
+            Container.BindFactory<WeaponPickup, WeaponPickup.Factory>()
+                .FromComponentInNewPrefab(pickupPrefab);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Game.Scripts.Gameplay
 
         void Update()
         {
-            transform.Translate(Vector2.up * _speed * Time.deltaTime);
+            transform.Translate(transform.up * _speed * Time.deltaTime);
 
             _timer += Time.deltaTime;
             if (_timer >= _lifetime)
