@@ -4,6 +4,7 @@
     {
         int CurrentScore { get; }
         void AddScore(int points);
+        void AddKillScore();
         void Reset();
     }
 }
