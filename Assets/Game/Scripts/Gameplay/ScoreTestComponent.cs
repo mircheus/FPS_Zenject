@@ -16,8 +16,6 @@ public class ScoreTestComponent : MonoBehaviour
     
     private void Start()
     {
-        Debug.Log($"Player speed : {_gameSettings.PlayerSpeed}");
         _scoreService.AddScore(_gameSettings.PointsPerKill);
-        Debug.Log($"Current score : {_scoreService.CurrentScore}");
     }
 }

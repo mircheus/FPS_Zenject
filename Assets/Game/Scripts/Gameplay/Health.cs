@@ -21,7 +21,7 @@ namespace Game.Scripts.Gameplay
 
         public void TakeDamage(int damage)
         {
-            _currentHealth -= Mathf.Max(0, _currentHealth - damage);
+            _currentHealth = Mathf.Max(0, _currentHealth - damage);
             Debug.Log($"{gameObject.name} health: {_currentHealth}/{_maxHealth}");
         }
     }

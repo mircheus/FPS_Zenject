@@ -18,7 +18,7 @@ namespace Game.Scripts.Gameplay
 
         private void Update()
         {
-            Vector2 direction = _inputService.MoveDirection;
+            Vector3 direction = _inputService.MoveDirection;
             transform.Translate(direction * _speed * Time.deltaTime);
         }
     }
