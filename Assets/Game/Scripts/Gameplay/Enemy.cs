@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Scripts.Project.Signals;
 using Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
@@ -7,14 +8,16 @@ namespace Game.Scripts.Gameplay
 {
     public class Enemy : MonoBehaviour
     {
-        private IScoreService _scoreService;
+        private SignalBus _signalBus;
         private Health _health;
+        private GameSettings _settings;
         private float _speed = 2f;
         
         [Inject]
-        public void Construct(IScoreService scoreService)
+        public void Construct(SignalBus signalBus, GameSettings settings)
         {
-            _scoreService = scoreService;
+            _signalBus = signalBus;
+            _settings = settings;
         }
 
         private void Start()
@@ -56,9 +59,9 @@ namespace Game.Scripts.Gameplay
 
         private void Die()
         {
-            // Вот она — чистая зависимость через DI.
-            // Враг не знает, КТО считает очки. Просто вызывает метод.
-            _scoreService.AddKillScore();
+            // Одна строка вместо шести зависимостей.
+            // Враг не знает, кто слушает. Ему всё равно.
+            _signalBus.Fire(new EnemyDiedSignal(transform.position, _settings.PointsPerKill));
             Destroy(gameObject);
         }
         

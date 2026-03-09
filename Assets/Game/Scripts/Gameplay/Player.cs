@@ -1,6 +1,7 @@
 ﻿using Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
+using Zenject.SpaceFighter;
 
 namespace Game.Scripts.Gameplay
 {
@@ -8,13 +9,13 @@ namespace Game.Scripts.Gameplay
     {
         private Health _health;
         private GameSettings _settings;
-        private IScoreService _scoreService;
+        private SignalBus _signalBus;
         
         [Inject]
-        public void Construct(GameSettings gameSettings, IScoreService scoreService)
+        public void Construct(GameSettings gameSettings, SignalBus signalBus)
         {
             _settings = gameSettings;
-            _scoreService = scoreService;
+            _signalBus = signalBus;
         }
 
         private void Start()
@@ -31,8 +32,7 @@ namespace Game.Scripts.Gameplay
 
             if (!_health.IsAlive)
             {
-                Debug.Log($"Player died! Game Over");
-                // Позже здесь будет сигнал GameOver
+                _signalBus.Fire(new PlayerDiedSignal());
             }
         }
     }
