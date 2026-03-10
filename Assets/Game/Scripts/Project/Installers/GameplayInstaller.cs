@@ -23,6 +23,11 @@ namespace Game.Scripts.Project.Installers
             Container.DeclareSignal<PlayerDiedSignal>();
             Container.DeclareSignal<ScoreChangedSignal>();
             
+            // GameManager — BindInterfacesTo, не BindInterfacesAndSelfTo,
+            // потому что никому не нужен GameManager напрямую,
+            // только его интерфейсы IInitializable и IDisposable
+            Container.BindInterfacesTo<GameManager>().AsSingle();
+            
             // Раньше было `Bind<IScoreService>().To<ScoreService>()`.
             // Теперь этот метод привязывает ScoreService ко всем его интерфейсам:
             // `IScoreService`, `IInitializable`, `IDisposable`.

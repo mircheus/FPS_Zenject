@@ -1,7 +1,6 @@
-﻿using Game.Scripts.Services;
+﻿using Game.Scripts.Project.Signals;
 using UnityEngine;
 using Zenject;
-using Zenject.SpaceFighter;
 
 namespace Game.Scripts.Gameplay
 {
@@ -10,7 +9,8 @@ namespace Game.Scripts.Gameplay
         private Health _health;
         private GameSettings _settings;
         private SignalBus _signalBus;
-        
+        private bool _isDead;
+
         [Inject]
         public void Construct(GameSettings gameSettings, SignalBus signalBus)
         {
@@ -28,11 +28,16 @@ namespace Game.Scripts.Gameplay
         // Будет вызываться позже, когда появятся враги
         public void OnHit(int damage)
         {
+            if (_isDead) return;
+            
             _health.TakeDamage(damage);
 
             if (!_health.IsAlive)
             {
+                _isDead = true;
+                Debug.Log("PlayerDied1");
                 _signalBus.Fire(new PlayerDiedSignal());
+                Debug.Log("PlayerDied2");
             }
         }
     }
