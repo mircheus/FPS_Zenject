@@ -8,8 +8,13 @@ namespace Game.Scripts.Project.Installers
     {
         public override void InstallBindings()
         {
-            Debug.Log("ProjectInstaller: installing bindings");
+            // Точка входа приложения
+            Container.BindInterfacesTo<AppEntryPoint>().AsSingle();
             
+            
+            // Глобальные сервисы — порядок биндинга НЕ важен,
+            // Zenject сам разрешит зависимости.
+            // Порядок ИНИЦИАЛИЗАЦИИ контролирует AppEntryPoint.
             Container.Bind<IGameStateService>()
                 .To<GameStateService>()
                 .AsSingle();
